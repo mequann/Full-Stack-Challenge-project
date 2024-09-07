@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "bild":"node app.js",
     "build": "docker buildx build -t songlist-app ."
 
      
