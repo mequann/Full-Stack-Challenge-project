@@ -5,8 +5,12 @@ import {
   fetchSongsRequest,
   deleteSongRequest,
   updateSongRequest,
-  addSongRequest,
+  // addSongRequest,
   Song,
+  deleteSongSuccess,
+  updateSongSuccess,
+  addSongSuccess,
+  addSongRequest,
 } from "../../features/songs/songsSlice";
 import SongForm from "../SongForm/SongForm";
 import { RootState } from "../../store/rootReducer";
@@ -18,20 +22,21 @@ const SongsList: React.FC = () => {
   const dispatch = useDispatch();
   const { songs, loading } = useSelector((state: RootState) => state.songs);
   const [editingSong, setEditingSong] = useState<Song | null>(null);
-   const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     dispatch(fetchSongsRequest());
   }, [dispatch, refresh]);
 
-  const handleDelete = (id: string) => {
-    dispatch(deleteSongRequest(id));
-    setRefresh(!refresh);
+  const handleDelete = (id: string | undefined) => {
+    if (id) {
+      dispatch(deleteSongRequest(id));
+      setRefresh(!refresh);
+    }
   };
 
   const handleEdit = (song: Song) => {
     setEditingSong(song);
-    setRefresh(!refresh);
   };
 
   const handleSubmit = (song: Song) => {
@@ -40,9 +45,15 @@ const SongsList: React.FC = () => {
       setEditingSong(null);
     } else {
       dispatch(addSongRequest(song));
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 0);
     }
-    setRefresh(!refresh);
+    setTimeout(() => {
+      if (!loading) {
+        setRefresh(!refresh);
+      }
+    }, 0);
   };
 
   return (
@@ -67,8 +78,8 @@ const SongsList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {songs?.map((song) => (
-              <tr key={song._id}>
+            {songs?.map((song, i) => (
+              <tr key={i}>
                 <td>{song.title}</td>
                 <td>{song.artist}</td>
                 <td>{song.album}</td>

@@ -1,8 +1,7 @@
-
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Song {
-  id?: string;
+  _id?: string;
   title: string;
   artist: string;
   album: string;
@@ -22,15 +21,15 @@ const initialState: SongsState = {
 };
 
 const songsSlice = createSlice({
-  name: 'songs',
+  name: "songs",
   initialState,
   reducers: {
     fetchSongsRequest(state) {
       state.loading = true;
     },
-   fetchSongsSucces(state, action: PayloadAction<Song[]>) {
-      state.songs =  action.payload;
-      console.log(action.payload, 'Songs payload in reducer')
+    fetchSongsSucces(state, action: PayloadAction<Song[]>) {
+      state.songs = action.payload;
+      // console.log(action.payload, "Songs payload in reducer");
       state.loading = false;
     },
     fetchSongsFailure(state, action: PayloadAction<string>) {
@@ -43,7 +42,6 @@ const songsSlice = createSlice({
     addSongSuccess(state, action: PayloadAction<Song>) {
       state.songs.push(action.payload);
       state.loading = false;
-      
     },
     addSongFailure(state, action: PayloadAction<string>) {
       state.error = action.payload;
@@ -53,7 +51,9 @@ const songsSlice = createSlice({
       state.loading = true;
     },
     updateSongSuccess(state, action: PayloadAction<Song>) {
-      const index = state.songs.findIndex(song => song.id === action.payload.id);
+      const index = state.songs.findIndex(
+        (song) => song._id === action.payload._id
+      );
       if (index !== -1) {
         state.songs[index] = action.payload;
       }
@@ -67,7 +67,7 @@ const songsSlice = createSlice({
       state.loading = true;
     },
     deleteSongSuccess(state, action: PayloadAction<string>) {
-      state.songs = state.songs.filter(song => song.id !== action.payload);
+      state.songs = state.songs.filter((song) => song._id !== action.payload);
       state.loading = false;
     },
     deleteSongFailure(state, action: PayloadAction<string>) {

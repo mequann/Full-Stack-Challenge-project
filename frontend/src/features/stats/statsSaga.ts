@@ -3,10 +3,11 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { fetchStatsRequest, fetchStatsSuccess, fetchStatsFailure } from './statsSlice';
 import { addSongSuccess, updateSongSuccess, deleteSongSuccess } from '../songs/songsSlice';
 import { fetchStatsApi } from '../../api/apiService';
+import {StatsState} from "./statsSlice";
 
-function* fetchStats() {
+function* fetchStats(){
   try {
-    const stats = yield call(fetchStatsApi);
+    const stats:StatsState = yield call(fetchStatsApi);
 
     // console.log(stats,'bbbbbbbbbbbbbbb')
     yield put(fetchStatsSuccess(stats));

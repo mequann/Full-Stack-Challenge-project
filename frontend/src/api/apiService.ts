@@ -7,16 +7,11 @@ const BASE_API_URL = "https://full-stack-challenge-project-1.onrender.com/api";
 // Song-related API calls
 export const fetchSongsApi = async () => {
   const response = await axios.get(`${BASE_API_URL}/getAll`);
-  console.log(response.data, "jjjjjjjjjjjjjjj");
+  // console.log(response.data, "jjjjjjjjjjjjjjj");
   return response.data;
 };
 
-export const addSongApi = async (song: {
-  title: string;
-  artist: string;
-  album: string;
-  genre: string;
-}) => {
+export const addSongApi = async (song: Song) => {
   const response = await axios.post(`${BASE_API_URL}/create`, song);
   console.log("from post");
   return response.data;
@@ -31,7 +26,8 @@ export const updateSongApi = async (song: Song) => {
 };
 
 export const deleteSongApi = async (id: string) => {
-  await axios.delete(`${BASE_API_URL}/delete/${id}`);
+const xx=  await axios.delete(`${BASE_API_URL}/delete/${id}`);
+console.log(xx.data, "from delete")
 };
 
 // Stats-related API call

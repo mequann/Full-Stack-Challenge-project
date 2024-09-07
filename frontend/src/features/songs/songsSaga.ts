@@ -1,5 +1,5 @@
 // /src/features/songs/songsSaga.ts
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from "redux-saga/effects";
 import {
   fetchSongsRequest,
   fetchSongsSucces,
@@ -13,12 +13,19 @@ import {
   deleteSongRequest,
   deleteSongSuccess,
   deleteSongFailure,
-} from './songsSlice';
-import { fetchSongsApi, addSongApi, updateSongApi, deleteSongApi } from '../../api/apiService';
+} from "./songsSlice";
+import { Song } from "./songsSlice";
+import {
+  fetchSongsApi,
+  addSongApi,
+  updateSongApi,
+  deleteSongApi,
+} from "../../api/apiService";
+import { PayloadAction } from "@reduxjs/toolkit";
 
-function* fetchSongs(action: ReturnType<typeof fetchSongsRequest>) {
+function* fetchSongs() {
   try {
-    const songs = yield call(fetchSongsApi);
+    const songs: Song[] = yield call(fetchSongsApi);
     // console.log(songs,'mmmmmmmmmmmmm')
     yield put(fetchSongsSucces(songs));
   } catch (error) {
@@ -26,31 +33,30 @@ function* fetchSongs(action: ReturnType<typeof fetchSongsRequest>) {
   }
 }
 
-function* addSong(action: ReturnType<typeof addSongRequest>) {
+function* addSong(action: PayloadAction<Song>) {
   try {
-    const newSong = yield call(addSongApi, action.payload);
-    // console.log(newSong,'newwwwww')
+    const newSong: Song = yield call(addSongApi, action.payload);
+    // console.log(newSong, "newwwwww");
     yield put(addSongSuccess(newSong));
   } catch (error) {
     yield put(addSongFailure((error as Error).message));
   }
 }
 
-function* updateSong(action: ReturnType<typeof updateSongRequest>) {
+function* updateSong(action: PayloadAction<Song>) {
   try {
-    const updatedSong = yield call(updateSongApi, action.payload);
-    console.log(updatedSong, 'updated');
+    const updatedSong: Song = yield call(updateSongApi, action.payload);
+    console.log(updatedSong, "updated");
     yield put(updateSongSuccess(updatedSong));
   } catch (error) {
     yield put(updateSongFailure((error as Error).message));
   }
 }
 
-
-function* deleteSong(action: ReturnType<typeof deleteSongRequest>) {
+function* deleteSong(action: PayloadAction<string>) {
   try {
-    const deleted=yield call(deleteSongApi, action.payload);
-    console.log(deleted, 'deleted');
+    const deleted: Song = yield call(deleteSongApi, action.payload);
+    console.log(deleted, "deleted");
     yield put(deleteSongSuccess(action.payload));
   } catch (error) {
     yield put(deleteSongFailure((error as Error).message));
@@ -59,7 +65,7 @@ function* deleteSong(action: ReturnType<typeof deleteSongRequest>) {
 
 export default function* songsSaga() {
   yield takeLatest(fetchSongsRequest.type, fetchSongs);
-  // console.log('Saga is watching for fetchSongsRequest'); 
+  // console.log('Saga is watching for fetchSongsRequest');
   yield takeLatest(addSongRequest.type, addSong);
   yield takeLatest(updateSongRequest.type, updateSong);
   yield takeLatest(deleteSongRequest.type, deleteSong);
