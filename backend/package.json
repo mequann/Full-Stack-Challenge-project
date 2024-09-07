@@ -5,7 +5,11 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "build": "docker buildx build -t songlist-app ."
+
+     
+
   },
   "dependencies": {
     "body-parser": "^1.20.2",
