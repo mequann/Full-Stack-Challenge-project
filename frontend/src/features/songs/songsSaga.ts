@@ -16,7 +16,7 @@ import {
 } from './songsSlice';
 import { fetchSongsApi, addSongApi, updateSongApi, deleteSongApi } from '../../api/apiService';
 
-function* fetchSongs() {
+function* fetchSongs(action: ReturnType<typeof fetchSongsRequest>) {
   try {
     const songs = yield call(fetchSongsApi);
     // console.log(songs,'mmmmmmmmmmmmm')

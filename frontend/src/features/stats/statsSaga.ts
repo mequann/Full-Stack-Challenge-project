@@ -8,7 +8,7 @@ function* fetchStats() {
   try {
     const stats = yield call(fetchStatsApi);
 
-    console.log(stats,'bbbbbbbbbbbbbbb')
+    // console.log(stats,'bbbbbbbbbbbbbbb')
     yield put(fetchStatsSuccess(stats));
   } catch (error) {
     yield put(fetchStatsFailure((error as Error).message));
