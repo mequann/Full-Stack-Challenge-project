@@ -34,9 +34,15 @@ Use the technologies below to create your frontend web application.
 much as possible.
 
 ● ReactJS: To build your user interface.
+
+
 ● Redux Toolkit: To manage the state of your app. You should first read about redux
 to learn the core concepts.
 ● Redux - Saga: To make calls to your Rest API.
+
+
+
+
 ● Emotion and Styled system: To style your app.
 ● Whenever a song is added, updated, or deleted, the latest changes should be shown
 without reloading the page.
