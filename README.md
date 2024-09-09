@@ -32,6 +32,7 @@ Technologies
 Use the technologies below to create your frontend web application.
  Typescript : use typescript to write your codes. Try not to use the type Any as
 much as possible.
+
 ● ReactJS: To build your user interface.
 ● Redux Toolkit: To manage the state of your app. You should first read about redux
 to learn the core concepts.
