@@ -22,12 +22,15 @@ export const updateSongApi = async (song: Song) => {
     throw new Error("Song ID is missing");
   }
   const response = await axios.put(`${BASE_API_URL}/update/${song._id}`, song);
-  return response.data;
+  // console.log(response.data.song,"from update");
+  return response.data.song;
 };
 
 export const deleteSongApi = async (id: string) => {
 const xx=  await axios.delete(`${BASE_API_URL}/delete/${id}`);
-console.log(xx.data, "from delete")
+// console.log(xx.data, "from delete")
+
+  return xx.data
 };
 
 // Stats-related API call

@@ -5,33 +5,26 @@ import {
   fetchSongsRequest,
   deleteSongRequest,
   updateSongRequest,
-  // addSongRequest,
-  Song,
-  deleteSongSuccess,
-  updateSongSuccess,
-  addSongSuccess,
   addSongRequest,
+  Song,
 } from "../../features/songs/songsSlice";
 import SongForm from "../SongForm/SongForm";
 import { RootState } from "../../store/rootReducer";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
 
 const SongsList: React.FC = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { songs, loading } = useSelector((state: RootState) => state.songs);
   const [editingSong, setEditingSong] = useState<Song | null>(null);
-  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     dispatch(fetchSongsRequest());
-  }, [dispatch, refresh]);
+  }, [dispatch]);
 
   const handleDelete = (id: string | undefined) => {
     if (id) {
       dispatch(deleteSongRequest(id));
-      setRefresh(!refresh);
     }
   };
 
@@ -45,15 +38,7 @@ const SongsList: React.FC = () => {
       setEditingSong(null);
     } else {
       dispatch(addSongRequest(song));
-      setTimeout(() => {
-        navigate("/");
-      }, 0);
     }
-    setTimeout(() => {
-      if (!loading) {
-        setRefresh(!refresh);
-      }
-    }, 0);
   };
 
   return (

@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect } from 'react';
-import { Song } from '../../features/songs/songsSlice';
-import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Song } from "../../features/songs/songsSlice";
+import { css } from "@emotion/react";
+import { Link } from "react-router-dom";
 
 interface SongFormProps {
   onSubmit: (song: Song) => void;
@@ -11,10 +11,10 @@ interface SongFormProps {
 
 const SongForm: React.FC<SongFormProps> = ({ onSubmit, initialSong }) => {
   const [song, setSong] = useState<Song>({
-    title: '',
-    artist: '',
-    album: '',
-    genre: ''
+    title: "",
+    artist: "",
+    album: "",
+    genre: "",
   });
 
   useEffect(() => {
@@ -35,14 +35,16 @@ const SongForm: React.FC<SongFormProps> = ({ onSubmit, initialSong }) => {
     onSubmit(song);
     // Reset form after submission if not editing
     if (!initialSong) {
-      setSong({ title: '', artist: '', album: '', genre: '' });
+      setSong({ title: "", artist: "", album: "", genre: "" });
     }
   };
 
   return (
     <div css={songFormStyles}>
-      <h2>{initialSong ? 'Edit Song' : 'Add Song'}</h2>
-      <Link to='/'><button>Back to Song List</button></Link>
+      <h2>{initialSong ? "Edit Song" : "Add Song"}</h2>
+      <Link to="/">
+        <button>Back to Song List</button>
+      </Link>
       <form onSubmit={handleSubmit} css={songFormStyles}>
         <input
           type="text"
@@ -76,7 +78,7 @@ const SongForm: React.FC<SongFormProps> = ({ onSubmit, initialSong }) => {
           placeholder="Genre"
           required
         />
-        <button type="submit">{initialSong ? 'Update' : 'Submit'}</button>
+        <button type="submit">{initialSong ? "Update" : "Submit"}</button>
       </form>
     </div>
   );
@@ -131,6 +133,5 @@ const songFormStyles = css`
     
   }
 `;
-
 
 export default SongForm;

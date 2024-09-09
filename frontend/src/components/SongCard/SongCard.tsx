@@ -1,7 +1,7 @@
 // /src/components/SongCard/SongCard.tsx
 import React from "react";
 import { Song } from "../../features/songs/songsSlice";
-import { css } from "@emotion/react";
+// import { css } from "@emotion/react";
 
 interface SongCardProps {
   song: Song;
@@ -11,8 +11,8 @@ interface SongCardProps {
 
 const SongCard: React.FC<SongCardProps> = ({ song, onDelete, onEdit }) => {
   const handleDelete = () => {
-    if (song.id) {
-      onDelete(song.id);
+    if (song._id) {
+      onDelete(song._id);
     } else {
       console.warn("Song ID is missing.");
     }
@@ -20,7 +20,7 @@ const SongCard: React.FC<SongCardProps> = ({ song, onDelete, onEdit }) => {
 
   return (
     <tr>
-      <td>{song.title}</td> 
+      <td>{song.title}</td>
       <td>{song.artist}</td>
       <td>{song.album}</td>
       <td>{song.genre}</td>
