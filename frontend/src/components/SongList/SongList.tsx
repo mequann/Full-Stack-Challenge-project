@@ -17,6 +17,7 @@ const SongsList: React.FC = () => {
   const dispatch = useDispatch();
   const { songs, loading } = useSelector((state: RootState) => state.songs);
   const [editingSong, setEditingSong] = useState<Song | null>(null);
+  const [selectedGenre, setSelectedGenre] = useState<string>("");
 
   useEffect(() => {
     dispatch(fetchSongsRequest());
@@ -40,6 +41,10 @@ const SongsList: React.FC = () => {
       dispatch(addSongRequest(song));
     }
   };
+  // Filter songs by selected genre
+  const filteredSongs = selectedGenre
+    ? songs.filter((song) => song.genre === selectedGenre)
+    : songs;
 
   return (
     <div css={tableStyles}>
@@ -51,6 +56,23 @@ const SongsList: React.FC = () => {
       {editingSong && (
         <SongForm onSubmit={handleSubmit} initialSong={editingSong} />
       )}
+      {/* Genre Filter */}
+      <div>
+        <label htmlFor="genre-filter">Filter by Genre: </label>
+        <select
+          id="genre-filter"
+          value={selectedGenre}
+          onChange={(e) => setSelectedGenre(e.target.value)}
+        >
+          <option value="">All Genres</option>
+          {/* Populate options dynamically from the songs list */}
+          {Array.from(new Set(songs.map((song) => song.genre))).map((genre) => (
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
+        </select>
+      </div>
       {!editingSong && (
         <table>
           <thead>
@@ -63,7 +85,7 @@ const SongsList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {songs?.map((song, i) => (
+            {filteredSongs?.map((song, i) => (
               <tr key={i}>
                 <td>{song.title}</td>
                 <td>{song.artist}</td>
